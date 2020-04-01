@@ -2,28 +2,24 @@ const findAge = {
     list: [],
     counter: 0,
     Parsing(frase) {
-        this.list[this.counter] = frase;
+        let i, j;
+        //procura o fim do nome
+        for (i = 0; frase[i] !== ' '; i ++){}
+        //procura o fim do numero
+        for (j = i + 5; frase[j] !== ' '; j++){}
+        //passa o nome e a idade para a lista
+        this.list[this.counter] = [frase.slice(0, i), frase.slice((i + 5), j)];
         this.counter++;
     },
     Responde(nome) {
-        let j = 0;
-        //percorre a lista de frases
-        for (let i = 0; i < this.list.length; i++){
-            //confere se a frase atual tem o mesmo nome que a entrada
-            while ((this.list[i][j] === nome[j]) || (this.list[i][j] === ' ')) {
-                j++;
-                //chega ao final do nome
-                if (this.list[i][j] === ' '){
-                    //j percorre o segmento ' tem ' para capturar o numero
-                    j += 5;
-                    let start = j;
-                    //j chega ao final do numero
-                    for (j; this.list[i][j] !== ' '; j++){
-                    }
-                    return this.list[i].slice(start, j);
-                }                
-            }
+        let i = 0;
+        //procura o nome
+        while ((i < this.list.length) && (this.list[i][0] !== nome)) {
+            i++;
         }
+        //retorna a idade correspondente
+        if (i < this.list.length)
+            return this.list[i][1];
         return 'not found';
     }
 }
